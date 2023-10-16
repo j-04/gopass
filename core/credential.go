@@ -1,16 +1,17 @@
 package core
 
 type Credential struct {
-	Id        string
-	Name      string
-	Login     string
-	Email     string
-	Password  string
-	IsEncoded bool
+	Id        string `json:"id"`
+	Name      string `json:"name"`
+	Login     string `json:"login"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	IsEncoded bool   `json:"is_encoded"`
 }
 
-func NewCredential(name, login, email, password string, isEncoded bool) *Credential {
+func NewCredential(id, name, login, email, password string, isEncoded bool) *Credential {
 	credential := &Credential{
+		Id:        id,
 		Name:      name,
 		Login:     login,
 		Email:     email,
