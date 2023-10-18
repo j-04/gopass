@@ -14,6 +14,10 @@ type Serializer interface {
 
 type CsvSerializer struct{}
 
+func NewCsvSerializer() *CsvSerializer {
+	return &CsvSerializer{}
+}
+
 func (this *CsvSerializer) Marshal(data map[string]*model.Credential) ([]byte, error) {
 	return nil, nil
 }
@@ -23,6 +27,10 @@ func (this *CsvSerializer) Unmarshal(data []byte) (map[string]*model.Credential,
 }
 
 type JsonSerializer struct{}
+
+func NewJsonSerializer() *JsonSerializer {
+	return &JsonSerializer{}
+}
 
 func (this *JsonSerializer) Marshal(data map[string]*model.Credential) ([]byte, error) {
 	m, err := json.Marshal(data)
