@@ -1,4 +1,4 @@
-package searcher
+package core
 
 type Searcher interface {
 	Find(pattern, source string) (bool, error)
@@ -14,9 +14,9 @@ func NewLevenshteinSearcher(threshold int) *LevenshteinSearcher {
 	}
 }
 
-func (this *LevenshteinSearcher) Find(pattern, source string) (bool, error) {
+func (searcher *LevenshteinSearcher) Find(pattern, source string) (bool, error) {
 	distance := levenshtein(pattern, source)
-	if distance <= this.threshold {
+	if distance <= searcher.threshold {
 		return true, nil
 	}
 	return false, nil

@@ -3,7 +3,7 @@ package searcher
 import (
 	"testing"
 
-	"github.com/j-04/pass-manager/core/searcher"
+	"github.com/j-04/gopass/core"
 )
 
 const (
@@ -92,7 +92,7 @@ func TestLevenshteinSearcher_Find(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			this := searcher.NewLevenshteinSearcher(tt.fields.threshold)
+			this := core.NewLevenshteinSearcher(tt.fields.threshold)
 			got, err := this.Find(tt.args.pattern, tt.args.source)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("LevenshteinSearcher.Find() error = %v, wantErr %v", err, tt.wantErr)

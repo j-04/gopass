@@ -1,4 +1,4 @@
-package model
+package core
 
 type Credential struct {
 	Id        string `json:"id"`

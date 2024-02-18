@@ -4,21 +4,20 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/j-04/pass-manager/core/format"
-	"github.com/j-04/pass-manager/core/model"
+	"github.com/j-04/gopass/core"
 )
 
 var (
-	cred1 *model.Credential = model.NewCredential("1", "Test1", "testlogin1", "test@test.com", "test1", false)
-	cred2 *model.Credential = model.NewCredential("2", "Test2", "testlogin2", "test@test.com", "test2", false)
+	cred1 *core.Credential = core.NewCredential("1", "Test1", "testlogin1", "test@test.com", "test1", false)
+	cred2 *core.Credential = core.NewCredential("2", "Test2", "testlogin2", "test@test.com", "test2", false)
 )
 
 const exp1 string = `{"1":{"id":"1","name":"Test1","login":"testlogin1","email":"test@test.com","password":"test1","is_encoded":false}}`
 
 const exp2 string = `{"1":{"id":"1","name":"Test1","login":"testlogin1","email":"test@test.com","password":"test1","is_encoded":false},"2":{"id":"2","name":"Test2","login":"testlogin2","email":"test@test.com","password":"test2","is_encoded":false}}`
 
-func NewMapWithData(data ...*model.Credential) map[string]*model.Credential {
-	m := make(map[string]*model.Credential)
+func NewMapWithData(data ...*core.Credential) map[string]*core.Credential {
+	m := make(map[string]*core.Credential)
 	for _, d := range data {
 		m[d.Id] = d
 	}
@@ -35,18 +34,18 @@ func TestJsonFormat_Marshal(t *testing.T) {
 	)
 
 	type args struct {
-		data map[string]*model.Credential
+		data map[string]*core.Credential
 	}
 	tests := []struct {
 		name    string
-		this    *format.JsonSerializer
+		this    *core.JsonSerializer
 		args    args
 		want    []byte
 		wantErr bool
 	}{
 		{
 			name: "Empty map",
-			args: args{data: make(map[string]*model.Credential)},
+			args: args{data: make(map[string]*core.Credential)},
 			want: []byte("{}"),
 		},
 		{
@@ -62,14 +61,14 @@ func TestJsonFormat_Marshal(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			this := &format.JsonSerializer{}
+			this := &core.JsonSerializer{}
 			got, err := this.Marshal(tt.args.data)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("JsonFormat.Marshal() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Json core.Marshal() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("JsonFormat.Marshal() = %v, want %v", string(got), string(tt.want))
+				t.Errorf("Json core.Marshal() = %v, want %v", string(got), string(tt.want))
 			}
 		})
 	}
@@ -81,15 +80,15 @@ func TestJsonFormat_Unmarshal(t *testing.T) {
 	}
 	tests := []struct {
 		name    string
-		this    *format.JsonSerializer
+		this    *core.JsonSerializer
 		args    args
-		want    map[string]*model.Credential
+		want    map[string]*core.Credential
 		wantErr bool
 	}{
 		{
 			name: "Empty json",
 			args: args{data: []byte("{}")},
-			want: make(map[string]*model.Credential),
+			want: make(map[string]*core.Credential),
 		},
 		{
 			name: "A map with one element in the json",
@@ -104,14 +103,14 @@ func TestJsonFormat_Unmarshal(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			this := &format.JsonSerializer{}
+			this := &core.JsonSerializer{}
 			got, err := this.Unmarshal(tt.args.data)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("JsonFormat.Unmarshal() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Json core.Unmarshal() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("JsonFormat.Unmarshal() = %v, want %v", got, tt.want)
+				t.Errorf("Json core.Unmarshal() = %v, want %v", got, tt.want)
 			}
 		})
 	}

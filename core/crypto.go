@@ -1,4 +1,4 @@
-package crypto
+package core
 
 type Encoder interface{}
 
